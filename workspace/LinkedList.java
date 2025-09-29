@@ -1,5 +1,5 @@
 /*
-Problem:  Write a program that keeps and manipulates a linked list of
+Sophia Babayev, 9/25/25, a program that keeps and manipulates a linked list of
 	    String data. The data will be provided by the user one item at a time.
       The user should be able to do the following operations:
                      -add "String"
@@ -14,18 +14,60 @@ Problem:  Write a program that keeps and manipulates a linked list of
 	Output:  the results to the screen of each menu
 	    choice, and error messages where appropriate.
 */
+
 public class LinkedList{
 
   //instance varialbes go here (think about what you need to keep track of!)
+  //private ArrayList<String> strArr = new ArrayList<>();
+  ListNode head;
+
 
   //constructors go here
-
+  public LinkedList(){
+    head = null;
+  }
 
   //precondition: the list has been initialized
   //postcondition: the ListNode containing the appropriate value has been added and returned
   public ListNode addAValue(String line)
   {
-    return null;
+    if (head == null){
+      head = new ListNode(line, null);
+      return head;
+    }
+
+
+    if (head.getValue().compareTo(line) > 0){
+      head = new ListNode(line, head);
+      
+      return head;
+    }
+
+
+    ListNode place = head;
+    boolean placed = false;
+
+    while (placed == false) {
+      if (place.getNext() != null && place.getNext().getValue().compareTo(line) < 0){
+       place = place.getNext();
+      }
+      else{
+        placed = true;
+      }
+      
+    } 
+      if (place.getNext() == null) {
+        ListNode newNode = new ListNode(line, null);
+        place.setNext(newNode);
+        return newNode;
+      } else {
+        ListNode newNode = new ListNode(line, place.getNext());
+        place.setNext(newNode);
+        return newNode;
+      }
+      
+      
+
   }
 
   //precondition: the list has been initialized
@@ -33,20 +75,73 @@ public class LinkedList{
   //if the value is not in the list returns null
   public ListNode deleteAValue(String line)
   {
+   if (head.getValue().equals(line)){
+        ListNode deletedNode = head;
+       
+        head = head.getNext();
+        return deletedNode;
+      }
+
+
+    ListNode place = head;
+    while (place != null){
+      
+      if (place.getNext().getValue().equals(line)){
+        ListNode deletedNode = place.getNext();
+        deletedNode.getValue().equals(null);
+        place.setNext(deletedNode.getNext());
+        return deletedNode;
+
+      } 
+      //System.out.println(str);
+      place = place.getNext();
+    }
     return null;
   }
+
+
 
   //precondition: the list has been initialized
   //postconditions: returns a string containing all values appended together with spaces between.
   public String showValues()
   {
-    return null;
+    String str = "";
+    ListNode place = head;
+    while (place != null){
+      str = str + place.getValue() + " ";
+      //System.out.println(str);
+      place = place.getNext();
+    }
+    return str;
   }
 
   //precondition: the list has been initialized
   //postconditions: clears the list.
   public void clear()
   {
-  
+    head = null;
   }
+
+
+
+  public void reverse(){
+
+    ListNode prev = null;
+    ListNode curr = head;
+    ListNode next = head.getNext();
+    while(curr != null){
+      curr.setNext(prev);
+      prev = curr;
+      curr = next;
+      next = next.getNext();
+    }
+    if (curr == null){
+      head = prev;
+    }
+    
+
+  }
+
+
+
 }
