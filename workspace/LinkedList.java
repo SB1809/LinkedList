@@ -15,6 +15,8 @@ Sophia Babayev, 9/25/25, a program that keeps and manipulates a linked list of
 	    choice, and error messages where appropriate.
 */
 
+
+
 public class LinkedList{
 
   //instance varialbes go here (think about what you need to keep track of!)
@@ -122,8 +124,8 @@ public class LinkedList{
     head = null;
   }
 
-
-
+  //precondition: the list has been initialized
+  //postconditions: reverses the entire linked list such that the tail is now the head and the head is the tail.
   public void reverse(){
 
     ListNode prev = null;
@@ -133,7 +135,12 @@ public class LinkedList{
       curr.setNext(prev);
       prev = curr;
       curr = next;
-      next = next.getNext();
+      if (next != null){
+        next = next.getNext();
+      } else {
+        next = null;
+      }
+      
     }
     if (curr == null){
       head = prev;
@@ -143,5 +150,49 @@ public class LinkedList{
   }
 
 
+    //precondition: the list has been initialized
+    //postconditions: take each "chunk" of n nodes and reverse them. 
+    //if there aren't enough nodes at the end to fit into a chunk they are left without being reversed. 
+    public void nReverse(int n) {
+      
+      if (head.getValue() == null || n <= 1) {
+        return;
+      }
+
+      ListNode tailOfSorted = null;
+      ListNode tail;
+      ListNode prev = null;
+      ListNode curr = head;
+      ListNode next = head.getNext();
+
+    while(curr != null){
+      tail = curr;
+      for (int i = 0; i < n && curr != null; i++) {
+        
+        curr.setNext(prev);
+        prev = curr;
+        curr = next;
+        if (next != null){
+          next = next.getNext();
+        } else {
+          next = null;
+        }
+        
+      }
+    if(tailOfSorted!= null){
+
+      tailOfSorted.setNext(prev);
+    }
+    else{
+        head = prev;
+    }
+      tail.setNext(curr);
+    tailOfSorted = tail;
+
+    }
+  
+      
+
+    }
 
 }
